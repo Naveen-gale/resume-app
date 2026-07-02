@@ -23,8 +23,7 @@ export const getProfileById = async (req, res) => {
 
 export const createProfile = async (req, res) => {
   try {
-    const profile = new Profile(req.body);
-    const savedProfile = await profile.save();
+    const savedProfile = await Profile.create(req.body);
     res.status(201).json(savedProfile);
   } catch (error) {
     res.status(400).json({ message: error.message });

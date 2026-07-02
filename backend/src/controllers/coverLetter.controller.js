@@ -36,6 +36,7 @@ export const generateCoverLetter = async (req, res) => {
       profileName: profile.fullName,
       jobTitle,
       company,
+      jobDescription,
       content: generatedContent
     });
   } catch (error) {
@@ -45,15 +46,15 @@ export const generateCoverLetter = async (req, res) => {
 
 export const saveCoverLetter = async (req, res) => {
   try {
-    const { profileId, profileName, jobTitle, company, content } = req.body;
-    const coverLetter = new CoverLetter({
+    const { profileId, profileName, jobTitle, company, jobDescription, content } = req.body;
+    const savedCoverLetter = await CoverLetter.create({
       profileId,
       profileName,
       jobTitle,
       company,
+      jobDescription,
       generatedCoverLetter: content
     });
-    const savedCoverLetter = await coverLetter.save();
     res.status(201).json(savedCoverLetter);
   } catch (error) {
     res.status(400).json({ message: error.message });

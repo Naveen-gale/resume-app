@@ -28,6 +28,9 @@ const ProfileForm = ({ initialData, onSubmit, onCancel }) => {
       phone: '',
       linkedin: '',
       yearsOfExperience: '',
+      skills: '',
+      projects: '',
+      certifications: '',
       companyExperience: [emptyExperience()],
       education: [emptyEducation()],
     }
@@ -267,6 +270,39 @@ const ProfileForm = ({ initialData, onSubmit, onCancel }) => {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Additional Information */}
+      <div className="space-y-4">
+        <h3 className="text-sm font-semibold text-slate-800 uppercase tracking-wider">
+          Additional Information
+        </h3>
+        <div className="space-y-4">
+          <Textarea
+            id="skills"
+            label="Skills"
+            placeholder="React, Node.js, Python, Project Management..."
+            value={form.skills}
+            onChange={(e) => updateField('skills', e.target.value)}
+            rows={2}
+          />
+          <Textarea
+            id="projects"
+            label="Projects"
+            placeholder="Describe your key projects..."
+            value={form.projects}
+            onChange={(e) => updateField('projects', e.target.value)}
+            rows={3}
+          />
+          <Textarea
+            id="certifications"
+            label="Certifications"
+            placeholder="AWS Certified Developer, PMP..."
+            value={form.certifications}
+            onChange={(e) => updateField('certifications', e.target.value)}
+            rows={2}
+          />
+        </div>
       </div>
 
       {/* Actions */}

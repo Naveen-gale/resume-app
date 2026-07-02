@@ -158,3 +158,13 @@ export const downloadCoverLetterPDF = async (id) => {
     handleError(error);
   }
 };
+
+// History API
+export const getHistoryByProfileId = async (profileId) => {
+  try {
+    const res = await apiClient.get(`/history/${profileId}`);
+    return handleResponse(res);
+  } catch (error) {
+    handleError(error);
+  }
+};

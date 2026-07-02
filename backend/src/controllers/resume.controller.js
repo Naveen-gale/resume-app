@@ -37,6 +37,7 @@ export const generateResume = async (req, res) => {
       profileName: profile.fullName,
       jobTitle,
       company,
+      jobDescription,
       content: generatedContent
     });
   } catch (error) {
@@ -46,15 +47,15 @@ export const generateResume = async (req, res) => {
 
 export const saveResume = async (req, res) => {
   try {
-    const { profileId, profileName, jobTitle, company, content } = req.body;
-    const resume = new Resume({
+    const { profileId, profileName, jobTitle, company, jobDescription, content } = req.body;
+    const savedResume = await Resume.create({
       profileId,
       profileName,
       jobTitle,
       company,
+      jobDescription,
       generatedResume: content
     });
-    const savedResume = await resume.save();
     res.status(201).json(savedResume);
   } catch (error) {
     res.status(400).json({ message: error.message });

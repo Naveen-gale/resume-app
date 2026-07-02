@@ -21,11 +21,11 @@ const Navbar = ({ toggleMobile }) => {
             <Menu className="w-5 h-5" />
           </button>
 
-          <div>
-            <h1 className="text-xl font-bold text-slate-900">
+          <div className="min-w-0">
+            <h1 className="text-xl font-bold text-slate-900 truncate">
               {currentPage?.label || 'Dashboard'}
             </h1>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="text-xs text-slate-500 mt-0.5 truncate">
               {getPageDescription(currentPage?.id)}
             </p>
           </div>

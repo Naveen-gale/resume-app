@@ -1,11 +1,11 @@
 import { Outlet } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import Sidebar from '../components/layout/Sidebar';
 import Navbar from '../components/layout/Navbar';
 import { useSidebar } from '../hooks/useSidebar';
 import { useProfiles } from '../hooks/useProfiles';
 import { useResumes } from '../hooks/useResumes';
 import { useCoverLetters } from '../hooks/useCoverLetters';
+import { useTheme } from '../hooks/useTheme';
 import { createContext, useContext } from 'react';
 
 // App context to share state across pages
@@ -17,11 +17,13 @@ const MainLayout = () => {
   const profilesState = useProfiles();
   const resumesState = useResumes();
   const coverLettersState = useCoverLetters();
+  const themeState = useTheme();
 
   const contextValue = {
     ...profilesState,
     ...resumesState,
     ...coverLettersState,
+    ...themeState,
   };
 
   return (
@@ -34,18 +36,14 @@ const MainLayout = () => {
           closeMobile={sidebar.closeMobile}
         />
 
-        <motion.main
-          animate={{
-            marginLeft: typeof window !== 'undefined' && window.innerWidth >= 1024
-              ? sidebar.isCollapsed ? 72 : 256
-              : 0,
-          }}
-          transition={{ duration: 0.3, ease: 'easeInOut' }}
-          className="min-h-screen"
+        <main
+          className={`min-h-screen transition-all duration-300 ease-in-out ${
+            sidebar.isCollapsed ? 'lg:ml-[72px]' : 'lg:ml-64'
+          }`}
         >
           <Navbar toggleMobile={sidebar.toggleMobile} />
           <Outlet />
-        </motion.main>
+        </main>
       </div>
     </AppContext.Provider>
   );
