@@ -15,7 +15,7 @@ import FadeIn from '../../components/animations/FadeIn';
 import { useAppContext } from '../../layouts/MainLayout';
 
 const SettingsPage = () => {
-  const { addToast } = useAppContext();
+  const { addToast, theme, setTheme, fontSize, setFontSize } = useAppContext();
 
   return (
     <PageWrapper>
@@ -27,34 +27,15 @@ const SettingsPage = () => {
             title="Appearance"
             description="Customize how the app looks"
           >
-            <ThemePicker />
+            <ThemePicker theme={theme} setTheme={setTheme} />
             <SettingSelect
               label="Font size"
               options={['Small', 'Medium', 'Large']}
-              defaultValue="Medium"
+              value={fontSize}
+              onChange={setFontSize}
             />
           </SettingsSection>
 
-          {/* Export */}
-          <SettingsSection
-            icon={Download}
-            title="Export & Data"
-            description="Manage your data and exports"
-          >
-            <SettingAction
-              label="Export all data"
-              description="Download all your profiles, resumes, and cover letters"
-              actionLabel="Export"
-              onAction={() => addToast('Export started — this is a demo', 'info')}
-            />
-            <SettingAction
-              label="Clear all data"
-              description="Remove all saved profiles and documents"
-              actionLabel="Clear"
-              variant="danger"
-              onAction={() => addToast('This is a demo — no data was cleared', 'info')}
-            />
-          </SettingsSection>
 
           {/* About */}
           <SettingsSection
@@ -130,15 +111,13 @@ const SettingToggle = ({ label, description, defaultChecked = false }) => {
   );
 };
 
-const SettingSelect = ({ label, options, defaultValue }) => {
-  const [value, setValue] = useState(defaultValue);
-
+const SettingSelect = ({ label, options, value, onChange }) => {
   return (
     <div className="flex items-center justify-between py-3 border-b border-slate-50 last:border-0">
       <p className="text-sm font-medium text-slate-700">{label}</p>
       <select
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e) => onChange(e.target.value)}
         className="text-sm text-slate-600 bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-500/20"
       >
         {options.map((opt) => (
@@ -170,9 +149,7 @@ const SettingAction = ({ label, description, actionLabel, variant = 'default', o
   </div>
 );
 
-const ThemePicker = () => {
-  const [theme, setTheme] = useState('light');
-
+const ThemePicker = ({ theme, setTheme }) => {
   const themes = [
     { id: 'light', label: 'Light', icon: Sun, color: 'bg-white border-slate-200' },
     { id: 'dark', label: 'Dark', icon: Moon, color: 'bg-slate-800 border-slate-700' },

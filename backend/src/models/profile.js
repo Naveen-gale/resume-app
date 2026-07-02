@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const companyExperienceSchema = new mongoose.Schema(
   {
+    id: { type: String },
     company: { type: String, required: true },
     role: { type: String, required: true },
     duration: { type: String },
@@ -12,6 +13,7 @@ const companyExperienceSchema = new mongoose.Schema(
 
 const educationSchema = new mongoose.Schema(
   {
+    id: { type: String },
     degree: { type: String, required: true },
     institution: { type: String, required: true },
     year: { type: String },

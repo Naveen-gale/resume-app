@@ -4,6 +4,7 @@ import {
   FileText,
   Mail,
   Settings,
+  History,
 } from 'lucide-react';
 
 export const NAVIGATION_ITEMS = [
@@ -36,5 +37,11 @@ export const NAVIGATION_ITEMS = [
     label: 'Settings',
     path: '/settings',
     icon: Settings,
+  },
+  {
+    id: 'history',
+    label: 'History',
+    path: '/history',
+    icon: History,
   },
 ];

@@ -16,10 +16,16 @@ export const useSidebar = () => {
     setIsMobileOpen(false);
   }, []);
 
+  const [isDesktop, setIsDesktop] = useState(
+    typeof window !== 'undefined' ? window.innerWidth >= 1024 : true
+  );
+
   // Close mobile sidebar on resize to desktop
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 1024) {
+      const desktop = window.innerWidth >= 1024;
+      setIsDesktop(desktop);
+      if (desktop) {
         setIsMobileOpen(false);
       }
     };
@@ -30,6 +36,7 @@ export const useSidebar = () => {
   return {
     isCollapsed,
     isMobileOpen,
+    isDesktop,
     toggleCollapse,
     toggleMobile,
     closeMobile,

@@ -5,6 +5,7 @@ import ProfilesPage from '../pages/profiles/ProfilesPage';
 import ResumePage from '../pages/resume/ResumePage';
 import CoverLetterPage from '../pages/cover-letter/CoverLetterPage';
 import SettingsPage from '../pages/settings/SettingsPage';
+import HistoryPage from '../pages/history/HistoryPage';
 
 const AppRoutes = () => {
   return (
@@ -15,6 +16,7 @@ const AppRoutes = () => {
         <Route path="/resume" element={<ResumePage />} />
         <Route path="/cover-letter" element={<CoverLetterPage />} />
         <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/history" element={<HistoryPage />} />
       </Route>
     </Routes>
   );
