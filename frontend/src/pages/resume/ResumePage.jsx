@@ -12,7 +12,7 @@ const ResumePage = () => {
   const {
     profiles,
     generatedResume,
-    isGenerating,
+    isGeneratingResume,
     generateResume,
     saveResume,
     downloadResumePDF,
@@ -69,7 +69,7 @@ const ResumePage = () => {
             </p>
             <ResumeGenerateForm
               profiles={profiles}
-              isGenerating={isGenerating}
+              isGenerating={isGeneratingResume}
               onGenerate={generateResume}
             />
           </div>
@@ -105,7 +105,7 @@ const ResumePage = () => {
 
             {/* Content */}
             <div className="p-8 min-h-[600px]">
-              {isGenerating ? (
+              {isGeneratingResume ? (
                 <Loader text="AI is crafting your perfect resume..." />
               ) : generatedResume ? (
                 <ResumePreview resume={generatedResume} />

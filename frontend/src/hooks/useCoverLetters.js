@@ -4,7 +4,7 @@ import * as api from '../services/api';
 export const useCoverLetters = () => {
   const [coverLetters, setCoverLetters] = useState([]);
   const [generatedCoverLetter, setGeneratedCoverLetter] = useState(null);
-  const [isGenerating, setIsGenerating] = useState(false);
+  const [isGeneratingCoverLetter, setIsGeneratingCoverLetter] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -26,19 +26,25 @@ export const useCoverLetters = () => {
   }, [loadCoverLetters]);
 
   const generateCoverLetter = useCallback(async (profileId, jobDescription) => {
-    setIsGenerating(true);
+    setIsGeneratingCoverLetter(true);
     setGeneratedCoverLetter(null);
     setError(null);
 
     try {
       const result = await api.generateCoverLetter(profileId, jobDescription);
-      setGeneratedCoverLetter(result);
-      return result;
+      // Auto-save the generated cover letter to the database
+      const saved = await api.saveCoverLetter(result);
+      const formatted = {...saved, id: saved._id, content: saved.generatedCoverLetter};
+      
+      setGeneratedCoverLetter(formatted);
+      setCoverLetters((prev) => [formatted, ...prev]);
+      
+      return formatted;
     } catch (err) {
       setError(err.message);
       throw err;
     } finally {
-      setIsGenerating(false);
+      setIsGeneratingCoverLetter(false);
     }
   }, []);
 
@@ -57,7 +63,7 @@ export const useCoverLetters = () => {
   const deleteCoverLetter = useCallback(async (id) => {
     try {
       await api.deleteCoverLetter(id);
-      setCoverLetters((prev) => prev.filter((cl) => cl.id !== id));
+      setCoverLetters((prev) => prev.filter((c) => c.id !== id));
     } catch (err) {
       setError(err.message);
       throw err;
@@ -76,7 +82,7 @@ export const useCoverLetters = () => {
   return {
     coverLetters,
     generatedCoverLetter,
-    isGenerating,
+    isGeneratingCoverLetter,
     generateCoverLetter,
     saveCoverLetter,
     deleteCoverLetter,

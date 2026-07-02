@@ -21,29 +21,6 @@ const SettingsPage = () => {
     <PageWrapper>
       <FadeIn>
         <div className="max-w-3xl mx-auto space-y-6">
-          {/* General */}
-          <SettingsSection
-            icon={Globe}
-            title="General"
-            description="Manage your application preferences"
-          >
-            <SettingToggle
-              label="Auto-save drafts"
-              description="Automatically save your work every 30 seconds"
-              defaultChecked={true}
-            />
-            <SettingToggle
-              label="Smart suggestions"
-              description="Show AI-powered content suggestions while typing"
-              defaultChecked={true}
-            />
-            <SettingSelect
-              label="Default language"
-              options={['English', 'Spanish', 'French', 'German', 'Hindi']}
-              defaultValue="English"
-            />
-          </SettingsSection>
-
           {/* Appearance */}
           <SettingsSection
             icon={Palette}
@@ -55,24 +32,6 @@ const SettingsPage = () => {
               label="Font size"
               options={['Small', 'Medium', 'Large']}
               defaultValue="Medium"
-            />
-          </SettingsSection>
-
-          {/* Notifications */}
-          <SettingsSection
-            icon={Bell}
-            title="Notifications"
-            description="Control your notification preferences"
-          >
-            <SettingToggle
-              label="Email notifications"
-              description="Receive email updates about your documents"
-              defaultChecked={false}
-            />
-            <SettingToggle
-              label="Browser notifications"
-              description="Get notified when generation is complete"
-              defaultChecked={true}
             />
           </SettingsSection>
 

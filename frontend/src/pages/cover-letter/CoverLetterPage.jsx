@@ -12,14 +12,12 @@ const CoverLetterPage = () => {
   const {
     profiles,
     generatedCoverLetter,
-    isGenerating,
+    isGeneratingCoverLetter,
     generateCoverLetter,
     saveCoverLetter,
     downloadCoverLetterPDF,
   } = useAppContext();
 
-  // Alias to avoid naming collision
-  const isGeneratingCL = isGenerating;
 
   const handleSave = async () => {
     if (generatedCoverLetter) {
@@ -72,7 +70,7 @@ const CoverLetterPage = () => {
             </p>
             <CoverLetterGenerateForm
               profiles={profiles}
-              isGenerating={isGeneratingCL}
+              isGenerating={isGeneratingCoverLetter}
               onGenerate={generateCoverLetter}
             />
           </div>
@@ -108,8 +106,8 @@ const CoverLetterPage = () => {
 
             {/* Content */}
             <div className="p-8 min-h-[600px]">
-              {isGeneratingCL ? (
-                <Loader text="AI is writing your cover letter..." />
+              {isGeneratingCoverLetter ? (
+                <Loader text="AI is crafting your perfect cover letter..." />
               ) : generatedCoverLetter ? (
                 <CoverLetterPreview coverLetter={generatedCoverLetter} />
               ) : (

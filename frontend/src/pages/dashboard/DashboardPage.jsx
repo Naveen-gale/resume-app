@@ -7,11 +7,38 @@ import ActivityCard from '../../components/cards/ActivityCard';
 import FadeIn from '../../components/animations/FadeIn';
 import StaggerChildren, { StaggerItem } from '../../components/animations/StaggerChildren';
 import { useAppContext } from '../../layouts/MainLayout';
-import { DUMMY_ACTIVITIES } from '../../constants/dummyData';
+import { formatDate } from '../../utils/helpers';
 
 const DashboardPage = () => {
   const navigate = useNavigate();
   const { profiles, resumes, coverLetters } = useAppContext();
+
+  const recentActivities = [
+    ...profiles.map((p) => ({
+      id: p.id || p._id,
+      type: 'profile',
+      action: 'Created Profile',
+      description: p.fullName,
+      createdAt: new Date(p.createdAt || Date.now()),
+    })),
+    ...resumes.map((r) => ({
+      id: r.id || r._id,
+      type: 'resume',
+      action: 'Generated Resume',
+      description: `${r.jobTitle} at ${r.company || 'Target Company'}`,
+      createdAt: new Date(r.createdAt || Date.now()),
+    })),
+    ...coverLetters.map((c) => ({
+      id: c.id || c._id,
+      type: 'cover-letter',
+      action: 'Generated Cover Letter',
+      description: `${c.jobTitle} at ${c.company || 'Target Company'}`,
+      createdAt: new Date(c.createdAt || Date.now()),
+    })),
+  ]
+    .sort((a, b) => b.createdAt - a.createdAt)
+    .slice(0, 5)
+    .map((item) => ({ ...item, timestamp: formatDate(item.createdAt) }));
 
   const stats = [
     {
@@ -97,13 +124,17 @@ const DashboardPage = () => {
             Recent Activity
           </h2>
           <div className="divide-y divide-slate-50">
-            {DUMMY_ACTIVITIES.map((activity, index) => (
-              <ActivityCard
-                key={activity.id}
-                activity={activity}
-                index={index}
-              />
-            ))}
+            {recentActivities.length > 0 ? (
+              recentActivities.map((activity, index) => (
+                <ActivityCard
+                  key={activity.id}
+                  activity={activity}
+                  index={index}
+                />
+              ))
+            ) : (
+              <p className="text-sm text-slate-500 py-4">No recent activity found.</p>
+            )}
           </div>
         </div>
       </FadeIn>

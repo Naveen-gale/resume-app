@@ -4,7 +4,7 @@ import * as api from '../services/api';
 export const useResumes = () => {
   const [resumes, setResumes] = useState([]);
   const [generatedResume, setGeneratedResume] = useState(null);
-  const [isGenerating, setIsGenerating] = useState(false);
+  const [isGeneratingResume, setIsGeneratingResume] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -26,19 +26,25 @@ export const useResumes = () => {
   }, [loadResumes]);
 
   const generateResume = useCallback(async (profileId, jobDescription) => {
-    setIsGenerating(true);
+    setIsGeneratingResume(true);
     setGeneratedResume(null);
     setError(null);
 
     try {
       const result = await api.generateResume(profileId, jobDescription);
-      setGeneratedResume(result);
-      return result;
+      // Auto-save the generated resume to the database
+      const saved = await api.saveResume(result);
+      const formatted = {...saved, id: saved._id, content: saved.generatedResume};
+      
+      setGeneratedResume(formatted);
+      setResumes((prev) => [formatted, ...prev]);
+      
+      return formatted;
     } catch (err) {
       setError(err.message);
       throw err;
     } finally {
-      setIsGenerating(false);
+      setIsGeneratingResume(false);
     }
   }, []);
 
@@ -77,7 +83,7 @@ export const useResumes = () => {
   return {
     resumes,
     generatedResume,
-    isGenerating,
+    isGeneratingResume,
     generateResume,
     saveResume,
     deleteResume,
