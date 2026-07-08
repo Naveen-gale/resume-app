@@ -2,7 +2,7 @@
 
 A simple web application to create professional resumes and cover letters quickly using AI.
 
-## Features app
+## Features 
 
 - Generate resumes
 - Generate cover letters
